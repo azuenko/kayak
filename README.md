@@ -1,4 +1,4 @@
-Kayak is a Byzantine fault-tolerant ordering (consensus) library, written on Go. The desing and implementation of Kayak were inspired by SMaRt-BFT and Raft.
+Kayak is a Byzantine fault-tolerant ordering (consensus) library, written on Go. The design and implementation of Kayak were inspired by SMaRt-BFT and Raft.
 
 [![GoDoc](https://godoc.org/github.com/stratumn/kayak?status.svg)](https://godoc.org/github.com/stratumn/kayak)
 
@@ -8,7 +8,7 @@ Kayak is a Byzantine fault-tolerant ordering (consensus) library, written on Go.
 
 Kayak is a core library for a decentralized system -- it provides ordering and synchronization facilities in the presence of Byzantine faults. The design of the library gets its inspiration from [SMaRt-BFT](https://github.com/bft-smart/library) and [coreos/raft](https://github.com/coreos/etcd/tree/master/raft).
 
-Similar to Raft, Kayak is a lightweigt library. It does not include auxiliary services, such as networking or persistent storage. To run the library, the developer has to supply an implementation of network (authenticated perfect links), storage and timer.
+Similar to Raft, Kayak is a lightweight library. It does not include auxiliary services, such as networking or persistent storage. To run the library, the developer has to supply an implementation of network (authenticated perfect links), storage and timer.
 
 ### Status
 
@@ -29,11 +29,11 @@ The library makes a distinction between client and server. It allows to cover us
 
 ### Design considerations
 
-The prime objective for the library is to be simple and minimal. Simplicity means readability, easyness to spot and fix bugs and refactor. Albeit the public methods are thread-safe, their execution is deliberately synchronized via the global lock. It brings some determinism, which buys reproducibility. The entire library should be seen as a single state machine.
+The prime objective for the library is to be simple and minimal. Simplicity means readability, easiness to spot and fix bugs and refactor. Albeit the public methods are thread-safe, their execution is deliberately synchronized via the global lock. It brings some determinism, which buys reproducibility. The entire library should be seen as a single state machine.
 
 In its current development state stability and security should be considered of larger importance than performance and scalability.
 
-The library is tested using blackbox approach only [Zmey](https://github.com/stratumn/zmey) is largely used for this purpose. The approach makes the tests quite lenghty, but it greatly simplifies frequent internal refactoring.
+The library is tested using blackbox approach only [Zmey](https://github.com/stratumn/zmey) is largely used for this purpose. The approach makes the tests quite lengthy, but it greatly simplifies frequent internal refactoring.
 
 Kayak aims to "log everything". The chosen policy hurts performance and causes greater code duplication, but is essential to spot bugs in a live system.
 
