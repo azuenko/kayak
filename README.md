@@ -33,14 +33,13 @@ The prime objective for the library is to be simple and minimal. Simplicity mean
 
 In its current development state stability and security should be considered of larger importance than performance and scalability.
 
-The library is tested using blackbox approach only [Zmey](https://github.com/stratumn/zmey) is largely used for this purpose. The approach makes the tests quite lengthy, but it greatly simplifies frequent internal refactoring.
+The tests consider only public interfaces (blackbox approach). [Zmey](https://github.com/stratumn/zmey) is largely used for this purpose. The approach makes the tests quite lengthy, but it greatly simplifies frequent internal refactoring.
 
 Kayak aims to "log everything". The chosen policy hurts performance and causes greater code duplication, but is essential to spot bugs in a live system.
 
-
 ### Next steps
 
-The major priority is to test the library in the wild, being used as a consensus engine for an existing project, such as [cockroachDB](https://github.com/cockroachdb/cockroach). For more detailed decomposition, see [Issues](https://github.com/stratumn/kayak/issues).
+The major priority is to test the library in the wild, being used as a consensus engine for an existing project, such as [cockroachDB](https://github.com/cockroachdb/cockroach). See [Issues](https://github.com/stratumn/kayak/issues) for more details.
 
 
 
