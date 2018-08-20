@@ -52,6 +52,10 @@ The major priority is to test the library in the wild, being used as a consensus
 * Message exchange map -- TODO: graph/sequence diagram
 * Byzantine consensus explained -- TODO
 
+### References
+
+TODO
+
 ### License
 
 The code is distributed under [Apache License Version 2.0](LICENSE)
