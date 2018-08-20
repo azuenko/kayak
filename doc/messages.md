@@ -38,11 +38,11 @@ All four server processes receive the same `KRequest`, but only process `B` proc
 
 When a server receives `KPropose` it immediately broadcasts `KWrite` message. `KWrite` contains the hash of the data previously received in `KPropose`. Hashing helps to reduce the amount of data being exchanged over the network.
 
-After sending of `KWrite` each server waits till it receives three identical `KWrite` messages. It happens at `A_5`, `B_6`, `C_6` and `D_5`. We assume that the messages arrive out of order, and processes are not synchronised in any way that is not implemented by the protocol itself.
+After sending of `KWrite` each server waits till it receives three identical `KWrite` messages. It happens at `A_5`, `B_6`, `C_6` and `D_5`. The local times does not match since we assume that the messages arrive out of order, and processes are not synchronised in any way that is not implemented by the protocol itself. The exchange of `KWrite`s implements the second phase of the round.
 
-When enough `KWrite` messages received, the servers repeat the broadcast with `KAccept` messages. At `A_8`, `B_8`, `C_9` and `D_8` enough (three) identical `KAccept` is received, and servers send back to `L` `KResponse` message. Three identical responses received at `L_4`.
+When enough `KWrite` messages received, the servers repeat the broadcast with `KAccept` messages. At `A_8`, `B_8`, `C_9` and `D_8` enough (three) identical `KAccept` are received. That terminates the third phase of the round. Servers report back the successeful termination with `KResponse` message. At client side, three identical responses received at `L_4`.
 
-In normal case a process waits for three out of four messages and then proceeds. At some point later in time the fourth message may arrive. That's the case of `A_8`, `A_10`, `B_9`, `B_10`, `C_7`, `C_10`, `D_9`, `D_10` and `L_5`. In this case the messages are just discarded.
+In normal case a process waits for three out of four messages and then proceeds. At some point later in time the fourth message may arrive. That's the case of `A_8`, `A_10`, `B_9`, `B_10`, `C_7`, `C_10`, `D_9`, `D_10` and `L_5`. These messages are of no use and just discarded.
 
 ### Faulty follower
 
