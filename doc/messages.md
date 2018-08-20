@@ -2,7 +2,7 @@
 
 To avoid verticalization of code, each type of exchange between distributed processes has its own named message bearing the data of the exchange. No general containers like "KMessage" is used. The approach helps to avoid different kinds of switch cases (by type, by enum value or flag) and their combinations. It also eliminates the questions of the kind "is the field A is used when the flag F is set?". The drawback, however is that it leads to some duplication of data fields (see [types.go](../types.go)). It requires to design many types of messages, some even without payload, to represent all possible communications between distributed processes.
 
-This document aims to clarify message exchanges in various states of BFT algorithm: normal mode, faults, catch-up and idle. Inevitably it also highlights some key points of consensus protocol; for full description see [References](README.md#references).
+This document aims to clarify message exchanges in various states of BFT algorithm: normal mode, faults, catch-up and idle. Inevitably it also highlights some key points of consensus protocol; for full description see [References](../README.md#references).
 
 ### Examples
 
