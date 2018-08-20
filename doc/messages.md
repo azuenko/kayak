@@ -1,6 +1,6 @@
 ### About
 
-To avoid verticalization of code, each type of exchange between distributed processes has its own named message bearing the data of the exchange. No general containers like "KMessage" is used. The approach helps to avoid different kinds of switch cases (by type, by enum value or flag) and their combinations. It also eliminates the questions of the kind "is the field A is used when the flag F is set?". The drawback, however is that it leads to some duplication of data fields (see [types.go](types.go)). It requires to design many types of messages, some even without payload, to represent all possible communications between distributed processes.
+To avoid verticalization of code, each type of exchange between distributed processes has its own named message bearing the data of the exchange. No general containers like "KMessage" is used. The approach helps to avoid different kinds of switch cases (by type, by enum value or flag) and their combinations. It also eliminates the questions of the kind "is the field A is used when the flag F is set?". The drawback, however is that it leads to some duplication of data fields (see [types.go](../types.go)). It requires to design many types of messages, some even without payload, to represent all possible communications between distributed processes.
 
 This document aims to clarify message exchanges in various states of BFT algorithm: normal mode, faults, catch-up and idle. Inevitably it also highlights some key points of consensus protocol; for full description see [References](README.md#references).
 
@@ -12,7 +12,7 @@ In our examples we will assume a system with six processes:
 * one client process `L`
 * one user process `U`
 
-User process is the one that uses Kayak to store data, it's external to the library. Technically, user and client processes are part of a single binary and communicate through funtction calls, not thrgough the network. They're separated purely for clarity.
+User process is the one that uses Kayak to store data, it's external to the library. Technically, user and client processes are parts of a single binary and communicate through funtction calls, not through the network. They're separated purely for clarity.
 
 We will also say that the current leader is process `B`, and, if it fails, `C` should take its place.
 
