@@ -76,9 +76,31 @@ Finally, the process `C` at `C_5` understands that it has now to act as the lead
 
 ### Catch-up
 
+It may happen that some of the processes need to synchnorise with the rest of the system and safely download the missing data. It occurs when a new process joins the system, or when an existing process restores from the crash or network failure. In both cases the outdated process enters the catch-up mode.
+
+
 ![Catch-up messages](d4.png)
 
+In our example `C` joins the network. Before it starts the synchnonization it finds out if it's ever neede. It does so by broadcasting `KWhastup` messages at `C_1`. When a process receives `KWhatsup` message it replies with `KHead`, containing the index of the last added record. That information is used to identify if a sync is needed.
+
+Process `C` collects `KHead` messages until it receives three of them from different processes indicating the same last index. That happens at `C_6`, with the identical `KHead`s received at `C_4`, `C_5` and `C_6`. The index that the process itself has is obtained at `C_3`, but, since the process needs sync, it's less that three others.
+
+At `C_6` the process learns that it needs to catch-up. It sends a single `KNeed` message to a randomly chosen process, and `KEnsure` messages to all other processes, excluding itself. `KNeed` contains the range of missing indexes (from last known to `C` to lask known to Byzantine majority, obtained at `C_4`, `C_5` and `C_6`). `KEnsure` contains only the last index known to the majority.
+
+Processes `A`, `B` and `D` reply accordingly. `B`, which receives `KNeed` replies with `KChunk`, the message containing the missing records in a requested range. `A` and `D` reply with `KConfirm`, which contain the cumulative hash of all records till the requested in `KEnsure`.
+
+When `C` receives data at `C_8`, it tentatively appends the missing data and computes the cumulative hash of the increased log. It does so to simulate the `KConfirm` message received from `B`. In other words, `KConfirm` can be deduced from `KChunk`, and `C` counts the deduced `KConfirm` at `C_8` along with the real ones received at `C_7` and `C_9`. In the end, at `C_9` gets the third `KConfirm`, which corresponds to the data chunk downloaded from `B`. At this point `C` definitely appends missing records to its log.
+
+In some cases it requires time to download the dataset. When the process being in a catch-up state ends the download, it may happen that all other processes advanced even further, and another sync is needed. That is perfectly fine unless the download does not greatly exceed the speed data arrives into the system.
 
 ### Idle mode
 
+In the previous cases we assumed that there's always some data entering the system through client's request messages. It's not always the case; sometimes nothing is happening. We will call that state idle mode.
+
+Without any additional communication a process can never say whether the system is in idle state, or it just doesn't receive any messages, e.g. the network is down. Or, the network was down, some records were added by the remaining processes without notifying the disconnected process, then the network went up being in idle state, and the reconnected process has no idea about newly added data.
+
 ![Idle mode messages](d5.png)
+
+To avoid this kind of scenario the processes are in constant exchange of `KWhatsup` and `KHead` messages, allowing them to resynchronise in case of failure. As a result, in idle state there's always some buzz, triggered by timers.
+
+The client, too, needs to be in sync with the system. It is acheived with `KBonjour` / `KTip` request-reply pair, initiated at `L_1`. `KTip`, similar to `KHead`, conveys the information about the index of last added record. Client should know the last index, it is required by `KRequest`. Server processes, upon reception of `KRequest` check the index provided by the client: it should be not too old. This additional meta protects from replay attacks, when exactly the same request is rebroadcasted by an attacker.
