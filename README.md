@@ -12,19 +12,16 @@ Similar to Raft, Kayak is a lightweight library. It does not include auxiliary s
 
 ### Status
 
-The library is in active, but early development stage. As a consequence, no guarantees can be given for security, stability and backward-compatibility. Use only in testing / staging environment.
+The library is in early development stage. As a consequence, no guarantees can be given for security, stability and backward-compatibility. Use only in testing / staging environment.
 
 
 ### Key features
 
-Kayak implements core consensus library features, such as:
-
 * Byzantine fault-tolerant ordering service across live processes
 * Synchronization primitives for new or delayed processes
-
-In addition, Kayak manages cluster membership through a simple protocol. The decision to add/remove a member is taken through the consensus itself, without the need of having a trusted coordinator.
-
-The library makes a distinction between client and server. It allows to cover use-cases of both type of systems: flat decentralized, and ranked client-server.
+* In-protocol decentralised membership management
+* Efficient uniqueness (replay attack protection)
+* Peer-to-peer and client-server deployment models
 
 
 ### Design considerations
