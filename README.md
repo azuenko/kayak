@@ -42,19 +42,19 @@ Kayak aims to "log everything". The chosen policy hurts performance and causes g
 The major priority is to test the library in the wild, being used as a consensus engine for an existing project, such as [cockroachDB](https://github.com/cockroachdb/cockroach). See [Issues](https://github.com/stratumn/kayak/issues) for more details.
 
 
-
 ### Documentation
 
 * [Godoc](https://godoc.org/github.com/stratumn/kayak)
-* [Quickstart](doc/quickstart.md)
-* [Internal design and code layout](doc/internal.md)
-* [Integration guidelines](doc/integration.md)
-* Message exchange map -- TODO: graph/sequence diagram
-* Byzantine consensus explained -- TODO
+* [BFT and message exchanges](doc/messages.md)
 
 ### References
 
-TODO
+
+* (SMaRt-BFT) Alysson Neves Bessani, João Sousa, and Eduardo E. P. Alchieri. "State machine replication for the masses with BFT-SMART." *44th Annual IEEE/IFIP International Conference on Dependable Systems and Networks, DSN 2014*, pages 355–362, 2014, [pdf](https://www.di.fc.ul.pt/~bessani/publications/dsn14-bftsmart.pdf)
+* (Raft) Diego Ongaro and John Ousterhout. "In Search of an Understandable Consensus Algorithm." *USENIX ATC'14 Proceedings of the 2014 USENIX conference on USENIX Annual Technical Conference*, pages 305-320, 2014, [pdf](https://ramcloud.stanford.edu/raft.pdf)
+* (BFT consensus) Christian Cachin. "Yet Another Visit to Paxos." *IBM Research Zurich, Tech. Rep. RZ 3754*, 2009, [page](http://domino.watson.ibm.com/library/cyberdig.nsf/papers/5233D5F926B64F2A8525766B00383EC9)
+* [SMaRt-BFT](https://github.com/bft-smart/library) implementation by A. Bessani and J. Sousa
+* [Raft](https://github.com/coreos/etcd/tree/master/raft) CoreOS implementation
 
 ### License
 
