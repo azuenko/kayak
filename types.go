@@ -3,6 +3,7 @@ package kayak
 import (
 	"crypto/sha256"
 	"fmt"
+	"strings"
 )
 
 const (
@@ -65,6 +66,7 @@ type KServerConfig struct {
 	WhatsupT       uint
 	BonjourT       uint
 	IndexTolerance uint
+	AllowExternal  bool
 	SendF          func(to KAddress, payload interface{})
 	ReturnF        func(payload interface{})
 	TraceF         func(payload interface{})
@@ -328,4 +330,12 @@ func (k KChunk) GoString() string {
 
 func (k KConfirm) GoString() string {
 	return fmt.Sprintf("KConfirm of %#v with data hash %#v and buzz hash %#v", k.Last, k.DataHash, k.BuzzHash)
+}
+
+func (k KStatus) GoString() string {
+	keysStr := make([]string, len(k.Keys))
+	for i, key := range k.Keys {
+		keysStr[i] = key.GoString()
+	}
+	return fmt.Sprintf("KStatus: process at (%4d:%-4d), leader is %#v, cluster {%s}", k.Round, k.Epoch, k.Leader, strings.Join(keysStr, " "))
 }

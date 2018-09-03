@@ -20,8 +20,9 @@ type Client struct {
 	bonjourT    KTime
 	nextBonjour KTime
 
-	lastKnownIndex KIndex
-	hasFreshIndex  bool
+	lastKnownIndex           KIndex
+	hasFreshIndex            bool
+	isBonjourSentAtLeastOnce bool
 
 	extSendF   func(to KAddress, payload interface{})
 	extReturnF func(payload interface{})
@@ -325,10 +326,14 @@ func (c *Client) receiveTip(t Tracer, from KAddress, tip KTip) {
 	c.tipCounters[tip.Round][from] = struct{}{}
 
 	if uint(len(c.tipCounters[tip.Round])) >= c.q {
+		c.traceF(t.Logf("tip quorum (%d/%d) reached", uint(len(c.tipCounters[tip.Round])), c.q))
+		c.traceF(t.Logf("update last known index from %#v to %#v", c.lastKnownIndex, tip.Round))
 		c.lastKnownIndex = tip.Round
 		c.hasFreshIndex = true
 
 		// TODO: cleanup old indexes
+	} else {
+		c.traceF(t.Logf("tip quorum (%d/%d) not reached", uint(len(c.tipCounters[tip.Round])), c.q))
 	}
 
 }
@@ -349,7 +354,14 @@ func (c *Client) maybeBonjour(t Tracer) bool {
 	}
 
 	c.nextBonjour = c.time + c.bonjourT
-	c.hasFreshIndex = false
+	if c.isBonjourSentAtLeastOnce {
+		c.traceF(t.Logf("making index dirty"))
+		c.hasFreshIndex = false
+	} else {
+		c.traceF(t.Logf("first time Bonjour - leaving index as fresh"))
+		c.hasFreshIndex = true
+		c.isBonjourSentAtLeastOnce = true
+	}
 
 	return true
 

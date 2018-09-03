@@ -13,6 +13,15 @@ func (k *Kayak) receiveSuspect(t Tracer, from KAddress, suspect KSuspect) {
 		return
 	}
 
+	if _, ok := k.suspects[suspect.Epoch]; !ok {
+		k.suspects[suspect.Epoch] = make(map[KAddress]KSuspect)
+	}
+
+	if _, alreadyReceived := k.suspects[suspect.Epoch][from]; alreadyReceived {
+		k.traceF(t.Logf("rejected as already received"))
+		return
+	}
+
 	somethingNew := false
 	for lid := range suspect.Loads {
 		k.traceF(t.Logf("pick %#v", suspect.Loads[lid]))
@@ -28,15 +37,6 @@ func (k *Kayak) receiveSuspect(t Tracer, from KAddress, suspect KSuspect) {
 
 	if !somethingNew {
 		k.traceF(t.Logf("rejected as nothing new in the Suspect"))
-		return
-	}
-
-	if _, ok := k.suspects[suspect.Epoch]; !ok {
-		k.suspects[suspect.Epoch] = make(map[KAddress]KSuspect)
-	}
-
-	if _, alreadyReceived := k.suspects[suspect.Epoch][from]; alreadyReceived {
-		k.traceF(t.Logf("rejected as already received"))
 		return
 	}
 
@@ -100,10 +100,6 @@ func (k *Kayak) maybeSuspect(t Tracer) bool {
 				buzz := hash(load.Request)
 				if _, alreadyProcessed := k.setBuzz[buzz]; alreadyProcessed {
 					k.traceF(t.Logf("request has been already processed, skip"))
-					continue
-				}
-				if _, alreadyInJobs := k.jobs[buzz]; alreadyInJobs {
-					k.traceF(t.Logf("request has been already added / not timeout, skip"))
 					continue
 				}
 				loadsMap[buzz] = load

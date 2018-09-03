@@ -64,6 +64,8 @@ type Kayak struct {
 	mostRecentHashToSync  KHash
 	mostRecentBuzzToSync  KHash
 
+	allowExternal bool
+
 	indexTolerance KRound
 
 	byzantineFlags int
@@ -128,6 +130,7 @@ func NewKayak(c *KServerConfig) *Kayak {
 		logDataHash:    []KHash{KHash{}},
 		logBuzzHash:    []KHash{KHash{}},
 		indexTolerance: KRound(c.IndexTolerance),
+		allowExternal:  c.AllowExternal,
 		extSendF:       c.SendF,
 		extReturnF:     c.ReturnF,
 		extTraceF:      c.TraceF,

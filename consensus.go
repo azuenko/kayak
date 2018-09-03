@@ -14,6 +14,11 @@ func (k *Kayak) receiveRequest(t Tracer, from KAddress, request KRequest) {
 	}
 	// ======== End of Byzantine behavior ========
 
+	if _, fromServer := k.rkeys[from]; !fromServer && !k.allowExternal {
+		k.traceF(t.Logf("rejected as only internal requests allowed"))
+		return
+	}
+
 	if request.Index > k.round {
 		k.traceF(t.Logf("request index is ahead"))
 		return
@@ -36,6 +41,7 @@ func (k *Kayak) receiveRequest(t Tracer, from KAddress, request KRequest) {
 	}
 
 	job := KJob{From: from, Timestamp: k.time, Request: request}
+	k.traceF(t.Logf("created new %#v", job))
 	k.jobs[buzz] = &job
 	k.updateEarliestJobTimestamp()
 	k.traceF(t.Logf("recorded"))
@@ -316,6 +322,8 @@ func (k *Kayak) decide(t Tracer, data KData, buzz KHash) {
 		k.traceF(t.Logf("remove job as completed %#v", job))
 		delete(k.jobs, buzz)
 		k.updateEarliestJobTimestamp()
+	} else {
+		k.traceF(t.Logf("no jobs associated with buzz %#v", buzz))
 	}
 
 	k.traceF(t.Logf("increase round from %#v to %#v", k.round, k.round+1))

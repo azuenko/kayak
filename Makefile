@@ -1,3 +1,6 @@
+demo:
+	go get github.com/stratumn/kayak/kayakdemo
+
 test:
 	go test -v -race -count=1 github.com/stratumn/kayak/...
 

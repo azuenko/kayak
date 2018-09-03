@@ -207,6 +207,7 @@ func makeDefaultServerConfig(pid int, storage *Storage) *kayak.KServerConfig {
 		WhatsupT:       serverTimeout,
 		BonjourT:       clientTimeout,
 		IndexTolerance: indexTolerance,
+		AllowExternal:  true,
 	}
 }
 
