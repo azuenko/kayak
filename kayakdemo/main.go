@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/gob"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -14,7 +15,6 @@ import (
 	"strings"
 	"time"
 
-	gob "github.com/dave/stablegob"
 	"github.com/stratumn/kayak"
 )
 

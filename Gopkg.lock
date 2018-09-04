@@ -40,7 +40,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/dave/stablegob",
     "github.com/stratumn/zmey",
     "github.com/stretchr/testify/assert",
     "github.com/stretchr/testify/require",
