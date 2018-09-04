@@ -1,4 +1,4 @@
-Kayak is a Byzantine fault-tolerant ordering (consensus) library, written on Go. The design and implementation of Kayak were inspired by SMaRt-BFT and Raft.
+Kayak is a Byzantine fault-tolerant ordering (consensus) library, written on Go. The design and implementation of Kayak were inspired by SMaRt-BFT and Raft. To try, see [quickstart](doc/quickstart.md).
 
 [![GoDoc](https://godoc.org/github.com/stratumn/kayak?status.svg)](https://godoc.org/github.com/stratumn/kayak)
 
@@ -41,8 +41,10 @@ The major priority is to test the library in the wild, being used as a consensus
 
 ### Documentation
 
-* [Godoc](https://godoc.org/github.com/stratumn/kayak)
+* [Quickstart demo](doc/quickstart.md)
 * [BFT and message exchanges](doc/messages.md)
+* [Godoc](https://godoc.org/github.com/stratumn/kayak)
+
 
 ### References
 
