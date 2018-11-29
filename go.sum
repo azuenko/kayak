@@ -4,5 +4,7 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stratumn/zmey v1.0.0 h1:g8K1trjYIDS3LyG9gIoeKv2g2AXIno9Ymm9cim5Lh9I=
 github.com/stratumn/zmey v1.0.0/go.mod h1:q2s7iRhGUVypzEqJ7gmGp1CnNugj4zZ2JoYepamlQ8A=
+github.com/stratumn/zmey v1.0.1 h1:o4ZknGlTMiEwt4IFr/qcZTu+tX3cWdOkBBm9Tx/NAyM=
+github.com/stratumn/zmey v1.0.1/go.mod h1:5/LlCAr0VgcLITg5GFHVaGw1XZNi+5H3ksN8OShvFdk=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
